@@ -41,16 +41,11 @@
     </div>
 
     <div class="box-footer">
-      <md-button v-on:click="toggleLiked" class="md-icon-button md-dense">
-        <md-icon :class="isLiked ? 'white' : 'md-accent'">thumb_up</md-icon>
-      </md-button>
+      <Like />
     </div>
   </div>
 </template>
 <style scoped>
-.white {
-  color: white !important;
-}
 .box {
   background: #131212;
   min-width: 75px;
@@ -58,7 +53,7 @@
   margin: 2px;
   border-radius: 7px;
   color: white;
-  margin-bottom: 20px
+  margin-bottom: 20px;
 }
 .box > .box-footer {
   margin-top: 30px;
@@ -79,14 +74,12 @@
 }
 </style>
 <script>
+import PostLike from "./Post-Footer";
+
 export default {
-  data: () => ({
-    isLiked: false,
-  }),
-  methods: {
-    toggleLiked() {
-      this.isLiked = !this.isLiked;
-    },
+  name: "Post",
+  components: {
+    Like: PostLike,
   },
 };
 </script>
