@@ -1,0 +1,18 @@
+
+.custom-input{
+    min-width: 100% !important;
+    height: 40px !important;
+    background: transparent !important;
+    border: none;
+    padding: 7px;
+    border-bottom: 2px solid tomato;
+    outline: 0;
+    transition: all 0.3s linear;
+    -webkit-transition: all 0.3s linear;
+    -moz-transition: all 0.3s linear;
+    -ms-transition: all 0.3s linear;
+    -o-transition: all 0.3s linear;
+    margin: 5px;
+}
+.custom-input:focus {
+}

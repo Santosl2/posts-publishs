@@ -3,7 +3,7 @@
     <md-button v-on:click="toggleLiked" class="md-icon-button md-dense">
       <md-icon :class="!isLiked ? 'white' : 'md-accent'">thumb_up</md-icon>
     </md-button>
-    {{ textLiked }}
+    <div>{{ textLiked }}</div>
   </div>
 </template>
 <style>
