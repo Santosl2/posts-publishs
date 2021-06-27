@@ -111,7 +111,7 @@ export default {
 
       // Login errors
 
-      this.$router.push('/main');
+      this.$router.push("/main");
       this.determinate = "indeterminate";
       form.username.hasErrors = false;
       form.password.hasErrors = false;
