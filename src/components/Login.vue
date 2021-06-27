@@ -76,6 +76,7 @@
 </template>
 <script>
 import { LANGUAGE } from "../resources/constants";
+import { API } from "../resources/axios";
 
 export default {
   name: "Index",
@@ -111,11 +112,20 @@ export default {
 
       // Login errors
 
-      this.$router.push("/main");
-      this.determinate = "indeterminate";
-      form.username.hasErrors = false;
-      form.password.hasErrors = false;
-      form.loading = true;
+      const fData = new FormData();
+      fData.append("email", form.username.value);
+      fData.append("password", form.password.value);
+
+      API.post("/auth/login", form).then((response) => {
+        console.log(response);
+      });
+
+      
+      //      this.$router.push("/main");
+      //this.determinate = "indeterminate";
+      //form.username.hasErrors = false;
+      //form.password.hasErrors = false;
+     // form.loading = true;
     },
   },
   computed: {
