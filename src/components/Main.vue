@@ -3,7 +3,7 @@
     <md-button class="md-fab md-fab-bottom-right md-mini md-primary md-fixed">
       <md-icon>invert_colors</md-icon>
     </md-button>
-    <Index />
+    <Login />
   </div>
 </template>
 <style>
@@ -35,11 +35,11 @@
 }
 </style>
 <script>
-import Index from "./Index.vue";
+import Login from "./Login.vue";
 export default {
   name: "Main",
   components: {
-    Index,
+    Login,
   },
 };
 </script>
