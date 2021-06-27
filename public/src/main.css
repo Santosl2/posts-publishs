@@ -2,10 +2,10 @@
 .custom-input{
     min-width: 100% !important;
     height: 40px !important;
-    background: transparent !important;
+    background: rosybrown !important;
     border: none;
     padding: 7px;
-    border-bottom: 2px solid tomato;
+    border-bottom: 2px solid rgb(65, 64, 64);
     outline: 0;
     transition: all 0.3s linear;
     -webkit-transition: all 0.3s linear;

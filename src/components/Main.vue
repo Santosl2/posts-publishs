@@ -1,13 +1,9 @@
 <template>
-  <div>
+  <div class="md-layout md-alignment-center-center">
     <md-button class="md-fab md-fab-bottom-right md-mini md-primary md-fixed">
       <md-icon>invert_colors</md-icon>
     </md-button>
-    <div class="md-layout md-alignment-center-center">
-      <div class="md-layout-item md-size-40">
-        <Index />
-      </div>
-    </div>
+    <Index />
   </div>
 </template>
 <style>

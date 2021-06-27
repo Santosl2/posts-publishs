@@ -1,18 +1,18 @@
 import Vue from "vue";
-import {
+/*import {
   MdButton,
   MdContent,
   MdTabs,
   MdIcon,
   MdAvatar,
-  MdCard
-} from "vue-material/dist/components";
+  MdCard,
+  MdCheckbox,
+  MdProgress,
+  MdField
+} from "vue-material/dist/components";*/
+
+import Material from "vue-material";
 import "vue-material/dist/vue-material.min.css";
 import "vue-material/dist/theme/default.css";
 
-Vue.use(MdButton);
-Vue.use(MdContent);
-Vue.use(MdTabs);
-Vue.use(MdIcon);
-Vue.use(MdAvatar);
-Vue.use(MdCard);
+Vue.use(Material);

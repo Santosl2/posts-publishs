@@ -20,6 +20,6 @@ html {
   background: #212121 !important;
 }
 #app {
-  margin-top: 60px;
+  margin-top: 60px !important;
 }
 </style>
