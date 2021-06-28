@@ -1,22 +1,13 @@
 import Vue from "vue";
 import Vuex from "vuex";
-import { CHANGE_USER } from "./mutation-types";
+import login from "./modules/login";
 
 Vue.use(Vuex);
+const debug = process.env.NODE_ENV != "production";
 
 export default new Vuex.Store({
-  state: {
-    userData: "",
+  modules: {
+    login,
   },
-
-  mutations: {
-    [CHANGE_USER](state, payload) {
-      state.userData = payload;
-    },
-  },
-  actions: {},
-  modules: {},
-  getters: {
-    getUsername: (state) => state.userData,
-  },
+  strict: debug,
 });
