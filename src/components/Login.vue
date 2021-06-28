@@ -25,7 +25,11 @@
         <md-card-content>
           <md-field :class="{ 'md-invalid': form.username.hasErrors }">
             <label>{{ language.USERNAME }}</label>
-            <md-input v-model="form.username.value" required></md-input>
+            <md-input
+              type="email"
+              v-model="form.username.value"
+              required
+            ></md-input>
             <md-icon>person</md-icon>
 
             <span class="md-error">{{ language.PASSWORD_ERROR }}</span>
@@ -63,40 +67,57 @@
     </form>
     <md-snackbar
       md-position="left"
-      md-duration="5000"
+      :md-duration="snackbar.duration"
       :md-active.sync="showSnackbar"
       md-persistent
     >
-      <span>Connection timeout. Showing limited messages!</span>
-      <md-button class="md-primary" @click="showSnackbar = false"
-        >Retry</md-button
+      <span>{{ snackbar.error }}</span>
+      <md-button class="md-primary" @click="snackbar.error = ''"
+        >Fechar</md-button
       >
     </md-snackbar>
   </div>
 </template>
+
 <script>
+import { mapActions } from "vuex";
 import { LANGUAGE } from "../resources/constants";
-import { API } from "../resources/axios";
+//import { API } from "../resources/axios";
 
 export default {
   name: "Index",
   data: () => ({
     form: {
       username: {
-        value: "",
+        value: "mfilype201c7@gmail.coc",
         hasErrors: false,
       },
       password: {
-        value: "",
+        value: "matheus1478c",
         hasErrors: false,
       },
       remember: false,
       loading: false,
     },
-    showSnackbar: false,
+    snackbar: {
+      error: "",
+      duration: 7000,
+    },
     determinate: "determinate",
   }),
   methods: {
+    ...mapActions("login", ["tryUserLogin"]),
+    formLoading(value) {
+      if (value === true) {
+        this.determinate = "indeterminate";
+        this.form.loading = true;
+
+        return;
+      }
+
+      this.determinate = "determinate";
+      this.form.loading = false;
+    },
     tryLogin() {
       let form = this.form;
 
@@ -112,25 +133,29 @@ export default {
 
       // Login errors
 
+      this.formLoading(true);
+
       const fData = new FormData();
       fData.append("email", form.username.value);
       fData.append("password", form.password.value);
 
-      API.post("/auth/login", form).then((response) => {
-        console.log(response);
-      });
-
-      
-      //      this.$router.push("/main");
-      //this.determinate = "indeterminate";
-      //form.username.hasErrors = false;
-      //form.password.hasErrors = false;
-     // form.loading = true;
+      this.tryUserLogin(fData)
+        .then(() => {
+          // do login
+          this.$router.push("/main");
+        })
+        .catch((err) => {
+          this.snackbar.error = err.password;
+          this.formLoading(false);
+        });
     },
   },
   computed: {
     language() {
       return LANGUAGE;
+    },
+    showSnackbar() {
+      return !(this.snackbar.error == "");
     },
   },
 };

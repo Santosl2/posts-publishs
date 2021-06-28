@@ -1,1 +1,1 @@
-export const CHANGE_USER = "AUTH/CHANGE_USER";
+export const CHANGE_USER = "LOGIN/CHANGE_USER";

@@ -14,11 +14,28 @@
   </div>
 </template>
 <script>
+import { mapActions, mapGetters } from "vuex";
 import Post from "../Post/Post";
 export default {
   name: "Logged",
   components: {
     Post,
+  },
+  methods: {
+    ...mapActions("login", ["tryUserReconnect"]),
+  },
+  computed: {
+    ...mapGetters({
+      user: "login/getUsername",
+    }),
+  },
+  mounted() {
+    if (localStorage.getItem("token") && this.user == "") {
+      const fData = new FormData();
+      fData.append("token", localStorage.getItem("token"));
+      this.tryUserReconnect(fData);
+      
+    }
   },
 };
 </script>

@@ -1,7 +1,5 @@
 import axios from "axios";
 
-
-
 export const API = axios.create({
-    baseURL: "http://localhost/apiSocial/",
-  });
+  baseURL: "http://localhost/apiSocial/",
+});
