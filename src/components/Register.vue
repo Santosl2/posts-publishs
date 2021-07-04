@@ -24,7 +24,7 @@
           </md-card-header>
 
           <md-card-content>
-            <md-field :class="{ 'md-invalid': form.username.hasErrors }">
+            <md-field :class="{ 'md-invalid': form.email.hasErrors }">
               <label>{{ language.EMAIL }}</label>
               <md-input
                 type="email"
@@ -39,7 +39,7 @@
             <md-field :class="{ 'md-invalid': form.username.hasErrors }">
               <label>{{ language.USERNAME }}</label>
               <md-input
-                type="email"
+                type="text"
                 v-model="form.username.value"
                 required
               ></md-input>
@@ -105,23 +105,28 @@ export default {
   name: "Register",
   data: () => ({
     form: {
-      username: {
+      email: {
         value: "mfilype201c7@gmail.coc",
+        min_length: 6,
+        max_length: 100,
         hasErrors: false,
       },
-      email: {
+      username: {
         value: "",
+        min_length: 6,
+        max_length: 24,
         hasErrors: false,
       },
       password: {
         value: "matheus1478c",
+        min_length: 8,
+        max_length: 72,
         hasErrors: false,
       },
       rpassword: {
         value: "",
         hasErrors: false,
       },
-      remember: false,
       loading: false,
     },
     snackbar: {
@@ -130,10 +135,76 @@ export default {
     },
     determinate: "determinate",
   }),
+  methods: {
+    formLoading(value) {
+      if (value === true) {
+        this.determinate = "indeterminate";
+        this.form.loading = true;
 
+        return;
+      }
+
+      this.determinate = "determinate";
+      this.form.loading = false;
+    },
+    tryRegister() {
+      let form = this.form;
+
+      for (let t in form) {
+        const field = form[t];
+        if (t == "loading" || t == "rpassword") {
+          continue;
+        }
+
+        if (field.value.length > field.max_length) {
+          this.snackbar.error = this.language.MAX_CARACT.replace(
+            "{field}",
+            t
+          ).replace("{length}", field.max_length);
+          return;
+        }
+
+        if (field.value.length < field.min_length) {
+          this.snackbar.error = this.language.MIN_CARACT.replace(
+            "{field}",
+            t
+          ).replace("{length}", field.min_length);
+          return;
+        }
+      }
+
+      if (form.username.value.trim() == "") {
+        form.username.hasErrors = true;
+        return;
+      }
+
+      if (form.password.value.trim() == "") {
+        form.password.hasErrors = true;
+        return;
+      }
+
+      if (form.email.value.trim() == "") {
+        form.email.hasErrors = true;
+        return;
+      }
+
+      /*if (form.rpassword.value != form.password.value) {
+        this.snackbar.error = this.language.PASSWORD_REPEAT_ERROR;
+        return;
+      }*/
+    },
+  },
   computed: {
     language() {
       return LANGUAGE;
+    },
+    showSnackbar: {
+      get() {
+        return !(this.snackbar.error == "");
+      },
+      set() {
+        return !(this.snackbar.error == "");
+      },
     },
   },
 };
