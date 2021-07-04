@@ -132,7 +132,7 @@ export default {
       }
 
       // Login errors
-
+      let vm = this;
       this.formLoading(true);
 
       const fData = new FormData();
@@ -144,8 +144,8 @@ export default {
           // do login
           this.$router.push("/main");
         })
-        .catch((err) => {
-          this.snackbar.error = err.password;
+        .catch(() => {
+          this.snackbar.error = vm.LANGUAGE.ERROR_LOGIN_CREDENTIALS;
           this.formLoading(false);
         });
     },

@@ -17,7 +17,7 @@ const actions = {
         .then((response) => {
           if (!response.data.message) {
             reject(response.data);
-          }
+          }  
 
           const user = [response.data.user, response.data.access_token];
           commit(CHANGE_USER, user);
