@@ -10,7 +10,7 @@
   >
     <md-progress-bar :md-mode="determinate"></md-progress-bar>
 
-    <form v-on:submit.prevent="tryLogin()">
+    <form v-on:submit.prevent="tryRegister()">
       <md-card style="border-radius: 0 0 3px 3px; padding: 20px">
         <md-card-header
           style="
@@ -19,7 +19,7 @@
             font-family: 'Raleway';
           "
         >
-          <div class="md-title">Login</div>
+          <div class="md-title">Registro</div>
         </md-card-header>
 
         <md-card-content>
@@ -60,9 +60,7 @@
           <div style="text-align: center">
             {{ language.NO_ACCOUNT }}
             <br />
-            <router-link to="/register">
-              {{ language.CREATE_ACCOUNT }}</router-link
-            >
+            <a> {{ language.CREATE_ACCOUNT }} </a>
           </div>
         </md-card-content>
       </md-card>
@@ -80,14 +78,11 @@
     </md-snackbar>
   </div>
 </template>
-
 <script>
-import { mapActions } from "vuex";
 import { LANGUAGE } from "../resources/constants";
-//import { API } from "../resources/axios";
 
 export default {
-  name: "Index",
+  name: "Register",
   data: () => ({
     form: {
       username: {
@@ -107,62 +102,10 @@ export default {
     },
     determinate: "determinate",
   }),
-  methods: {
-    ...mapActions("login", ["tryUserLogin"]),
-    formLoading(value) {
-      if (value === true) {
-        this.determinate = "indeterminate";
-        this.form.loading = true;
 
-        return;
-      }
-
-      this.determinate = "determinate";
-      this.form.loading = false;
-    },
-    tryLogin() {
-      let form = this.form;
-
-      if (form.username.value.trim() == "") {
-        form.username.hasErrors = true;
-        return;
-      }
-
-      if (form.password.value.trim() == "") {
-        form.password.hasErrors = true;
-        return;
-      }
-
-      // Login errors
-      let vm = this;
-      this.formLoading(true);
-
-      const fData = new FormData();
-      fData.append("email", form.username.value);
-      fData.append("password", form.password.value);
-
-      this.tryUserLogin(fData)
-        .then(() => {
-          // do login
-          this.$router.push("/main");
-        })
-        .catch(() => {
-          this.snackbar.error = vm.language.ERROR_LOGIN_CREDENTIALS;
-          this.formLoading(false);
-        });
-    },
-  },
   computed: {
-    language() {
+    languague() {
       return LANGUAGE;
-    },
-    showSnackbar: {
-      get() {
-        return !(this.snackbar.error == "");
-      },
-      set() {
-        return !(this.snackbar.error == "");
-      },
     },
   },
 };

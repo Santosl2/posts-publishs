@@ -9,6 +9,10 @@ const routes = [
     component: () => import("../components/Main.vue"),
   },
   {
+    path: "/register",
+    component: () => import("../components/Register.vue"),
+  },
+  {
     path: "/main",
     component: () => import("../components/Logged/Logged.vue"),
     meta: {
