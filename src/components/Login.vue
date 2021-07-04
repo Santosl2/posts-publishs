@@ -24,15 +24,15 @@
 
         <md-card-content>
           <md-field :class="{ 'md-invalid': form.username.hasErrors }">
-            <label>{{ language.USERNAME }}</label>
+            <label>{{ language.EMAIL }}</label>
             <md-input
               type="email"
               v-model="form.username.value"
               required
             ></md-input>
-            <md-icon>person</md-icon>
+            <md-icon>mail</md-icon>
 
-            <span class="md-error">{{ language.PASSWORD_ERROR }}</span>
+            <span class="md-error">{{ language.EMPTY_FIELD }}</span>
           </md-field>
 
           <md-field :class="{ 'md-invalid': form.password.hasErrors }">
