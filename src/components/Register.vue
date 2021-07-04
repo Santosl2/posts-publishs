@@ -41,6 +41,7 @@
               <md-input
                 type="text"
                 v-model="form.username.value"
+                autocomplete="off"
                 required
               ></md-input>
               <md-icon>person</md-icon>
@@ -53,12 +54,13 @@
               <md-input
                 type="password"
                 v-model="form.password.value"
+                autocomplete="off"
                 required
               ></md-input>
               <span class="md-error">{{ language.PASSWORD_ERROR }}</span>
             </md-field>
 
-            <md-field :class="{ 'md-invalid': form.password.hasErrors }">
+            <md-field :class="{ 'md-invalid': form.rpassword.hasErrors }">
               <label>{{ language.REPEAT_PASSWORD }}</label>
               <md-input
                 type="password"
@@ -99,6 +101,7 @@
   </div>
 </template>
 <script>
+import { mapActions } from "vuex";
 import { LANGUAGE } from "../resources/constants";
 
 export default {
@@ -106,25 +109,25 @@ export default {
   data: () => ({
     form: {
       email: {
-        value: "mfilype201c7@gmail.coc",
+        value: "trycatch@live.com",
         min_length: 6,
         max_length: 100,
         hasErrors: false,
       },
       username: {
-        value: "",
+        value: "trycatch",
         min_length: 6,
         max_length: 24,
         hasErrors: false,
       },
       password: {
-        value: "matheus1478c",
+        value: "matheus123456",
         min_length: 8,
         max_length: 72,
         hasErrors: false,
       },
       rpassword: {
-        value: "",
+        value: "matheus123456",
         hasErrors: false,
       },
       loading: false,
@@ -136,6 +139,7 @@ export default {
     determinate: "determinate",
   }),
   methods: {
+    ...mapActions("login", ["tryUserRegister"]),
     formLoading(value) {
       if (value === true) {
         this.determinate = "indeterminate";
@@ -150,10 +154,22 @@ export default {
     tryRegister() {
       let form = this.form;
 
+      this.formLoading(true);
+      /*
+  Validação do formulário de forma automatica
+ */
+
+      const fData = new FormData();
+
       for (let t in form) {
         const field = form[t];
         if (t == "loading" || t == "rpassword") {
           continue;
+        }
+        this.formLoading(false);
+        if (field.value.trim() == "") {
+          field.hasErrors = true;
+          return;
         }
 
         if (field.value.length > field.max_length) {
@@ -171,27 +187,20 @@ export default {
           ).replace("{length}", field.min_length);
           return;
         }
+
+        fData.append(t, field.value);
       }
 
-      if (form.username.value.trim() == "") {
-        form.username.hasErrors = true;
-        return;
-      }
+      fData.append("rpassword", form.rpassword.value);
 
-      if (form.password.value.trim() == "") {
-        form.password.hasErrors = true;
-        return;
-      }
-
-      if (form.email.value.trim() == "") {
-        form.email.hasErrors = true;
-        return;
-      }
-
-      /*if (form.rpassword.value != form.password.value) {
-        this.snackbar.error = this.language.PASSWORD_REPEAT_ERROR;
-        return;
-      }*/
+      this.tryUserRegister(fData)
+        .then(() => {
+          this.$router.push("/main");
+        })
+        .catch((err) => {
+          this.snackbar.error = err;
+          this.formLoading(false);
+        });
     },
   },
   computed: {

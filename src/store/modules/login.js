@@ -17,7 +17,7 @@ const actions = {
         .then((response) => {
           if (!response.data.message) {
             reject(response.data);
-          }  
+          }
 
           const user = [response.data.user, response.data.access_token];
           commit(CHANGE_USER, user);
@@ -32,6 +32,33 @@ const actions = {
         });
     });
   },
+
+  tryUserRegister({ commit }, user) {
+    return new Promise((resolve, reject) => {
+      API.post("/auth/register", user)
+        .then((response) => {
+          const data = response.data;
+          if (!data.message) {
+            const error = data.email
+              ? data.email
+              : data.username
+              ? data.username
+              : "Error";
+            reject(error);
+          }
+
+          const user = [response.data.user, response.data.access_token];
+          commit(CHANGE_USER, user);
+          localStorage.setItem("token", user[1]);
+          API.defaults.headers.common["Authorization"] = user[1];
+          resolve(response);
+        })
+        .catch((err) => {
+          reject(err);
+        });
+    });
+  },
+
   tryUserReconnect({ commit }, token) {
     return new Promise((resolve, reject) => {
       API.post("/auth/tryReconnect", token)
