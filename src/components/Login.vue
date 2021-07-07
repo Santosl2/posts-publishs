@@ -91,11 +91,11 @@ export default {
   data: () => ({
     form: {
       username: {
-        value: "mfilype201c7@gmail.coc",
+        value: "trycatch@live.com",
         hasErrors: false,
       },
       password: {
-        value: "matheus1478c",
+        value: "matheus123456",
         hasErrors: false,
       },
       remember: false,

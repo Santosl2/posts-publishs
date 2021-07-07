@@ -21,9 +21,6 @@ const actions = {
 
           const user = [response.data.user, response.data.access_token];
           commit(CHANGE_USER, user);
-
-          localStorage.setItem("token", user[1]);
-          API.defaults.headers.common["Authorization"] = user[1];
           resolve(response);
         })
         .catch((err) => {
@@ -49,8 +46,6 @@ const actions = {
 
           const user = [response.data.user, response.data.access_token];
           commit(CHANGE_USER, user);
-          localStorage.setItem("token", user[1]);
-          API.defaults.headers.common["Authorization"] = user[1];
           resolve(response);
         })
         .catch((err) => {
@@ -91,4 +86,7 @@ export default {
   mutations,
   actions,
   getters,
+  subscribe: function (mutation){
+    console.log(mutation)
+  }
 };
