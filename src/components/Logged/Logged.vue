@@ -29,13 +29,8 @@ export default {
       user: "login/getUsername",
     }),
   },
-  mounted() {
-    if (localStorage.getItem("token") && this.user == "") {
-      const fData = new FormData();
-      fData.append("token", localStorage.getItem("token"));
-      this.tryUserReconnect(fData);
-      
-    }
+  created() {
+    
   },
 };
 </script>

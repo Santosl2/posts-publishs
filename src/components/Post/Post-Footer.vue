@@ -13,6 +13,7 @@
 </style>
 <script>
 import { LANGUAGE } from "../../resources/constants.js";
+import { API } from "../../resources/axios";
 
 export default {
   name: "PostFooter",
@@ -27,8 +28,16 @@ export default {
   }),
   methods: {
     toggleLiked() {
-      this.isLiked = !this.isLiked;
+      this.likePost();
     },
+
+    likePost() {
+      const fData = new FormData();
+      fData.append("pId", this.postId);
+      API.post("/posts/likePost", fData).then((response) => {
+        this.isLiked = response.data.success;
+      });
+    }
   },
   computed: {
     textLiked: function () {
