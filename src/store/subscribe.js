@@ -1,4 +1,5 @@
 import store from "./index";
+import { API } from "../resources/axios";
 
 store.subscribe((mutation) => {
   switch (mutation.type) {
@@ -9,6 +10,7 @@ store.subscribe((mutation) => {
           localStorage.setItem("token", token);
         }
       } else {
+        API.defaults.headers.common["Authorization"] = null;
         localStorage.remove("token");
       }
       break;

@@ -8,6 +8,4 @@ if (localStorage.getItem("token")) {
   API.defaults.headers.common["Authorization"] = `Bearer ${localStorage.getItem(
     "token"
   )}`;
-} else {
-  API.defaults.headers.common["Authorization"] = null;
 }
