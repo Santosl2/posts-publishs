@@ -3,18 +3,15 @@
     <div class="box" v-for="post in posts" :key="post.id">
       <div class="box-user">
         <md-avatar>
-          <img
-            :src="post.profileImg"
-            alt="Avatar"
-          />
+          <img :src="post.profileImg" alt="Avatar" />
         </md-avatar>
-        <span class="username">{{post.username}}</span> fez uma nova publicação
+        <span class="username">{{ post.username }}</span> fez uma nova
+        publicação
       </div>
-      <div class="box-content" v-html="post.content">
-      </div>
+      <div class="box-content" v-html="post.content"></div>
 
       <div class="box-footer">
-        <Like :postId="post.id" />
+        <Like :userVoted="post.voted == 1" :postId="post.id" />
       </div>
     </div>
   </div>
@@ -28,7 +25,7 @@ export default {
   components: {
     Like: PostLike,
   },
-  created() {
+  mounted() {
     this.getAllPosts();
   },
   data: () => ({
@@ -38,11 +35,9 @@ export default {
     getAllPosts() {
       const vm = this;
 
-      API.get("/posts/getAll").then((response) => {
+      API.get("/posts").then((response) => {
         vm.posts = response.data;
-        
       });
-
     },
   },
 };

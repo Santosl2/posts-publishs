@@ -1,7 +1,7 @@
 <template>
   <div>
     <md-button v-on:click="toggleLiked" class="md-icon-button md-dense">
-      <md-icon :class="!isLiked ? 'white' : 'md-accent'">thumb_up</md-icon>
+      <md-icon :class="!userVoted ? 'white' : 'md-accent'">thumb_up</md-icon>
     </md-button>
     <div>{{ textLiked }}</div>
   </div>
@@ -15,6 +15,7 @@
 import { LANGUAGE } from "../../resources/constants.js";
 import { API } from "../../resources/axios";
 
+// Todo: get posts likes and choose button
 export default {
   name: "PostFooter",
   props: {
@@ -22,10 +23,12 @@ export default {
       type: Number,
       default: 0,
     },
+    userVoted: {
+      type: Boolean,
+      default: false,
+    }
   },
-  data: () => ({
-    isLiked: false,
-  }),
+
   methods: {
     toggleLiked() {
       this.likePost();
@@ -35,13 +38,13 @@ export default {
       const fData = new FormData();
       fData.append("pId", this.postId);
       API.post("/posts/likePost", fData).then((response) => {
-        this.isLiked = response.data.success;
+        this.userVoted = response.data.success;
       });
-    }
+    },
   },
   computed: {
     textLiked: function () {
-      return !this.isLiked ? LANGUAGE.FIRST_LIKE : LANGUAGE.LIKE;
+      return !this.userVoted ? LANGUAGE.FIRST_LIKE : LANGUAGE.LIKE;
     },
   },
 };
