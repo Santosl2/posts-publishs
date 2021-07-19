@@ -1,9 +1,11 @@
 <template>
   <div>
-    <md-button v-on:click="toggleLiked" class="md-icon-button md-dense">
-      <md-icon :class="!userVoted ? 'white' : 'md-accent'">thumb_up</md-icon>
-    </md-button>
-    <div>{{ textLiked }}</div>
+    <div style="padding: 5px; height: 25px">
+      <md-button v-on:click="toggleLiked" style="margin-top: -8px" class="md-icon-button md-dense">
+        <md-icon :class="!userVoted ? 'white' : 'md-accent'">thumb_up</md-icon>
+      </md-button>
+      <i>{{ textLiked }}</i>
+    </div>
   </div>
 </template>
 <style>
@@ -26,7 +28,7 @@ export default {
     userVoted: {
       type: Boolean,
       default: false,
-    }
+    },
   },
 
   methods: {
