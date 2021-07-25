@@ -18,6 +18,7 @@ export const LANGUAGE = {
 
     FIRST_LIKE: "Seja o primeiro a curtir",
     LIKE: "Você curtiu esta publicação",
+    LIKE_MORE: "Você e outros {count} curtiram.",
 
 
 }

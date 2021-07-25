@@ -9,6 +9,9 @@ store.subscribe((mutation) => {
         if (!localStorage.getItem("token")) {
           localStorage.setItem("token", token);
         }
+        API.defaults.headers.common[
+          "Authorization"
+        ] = `Bearer ${localStorage.getItem("token")}`;
       } else {
         API.defaults.headers.common["Authorization"] = null;
         localStorage.remove("token");
