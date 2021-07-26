@@ -13,12 +13,16 @@
     </div>
 
     <div class="menu-content">
-      <li>Home</li>
+      <li style="font-weight: bold">
+        {{ user[0].username }}
+      </li>
       <li>Mensagens</li>
     </div>
   </div>
 </template>
 <script>
+import { mapGetters } from "vuex";
+
 export default {
   name: "Tabs",
   props: {
@@ -26,9 +30,14 @@ export default {
       type: Boolean,
       default: false,
     },
-    data: () => ({
-      showNavigation: false,
-      showSidepanel: false,
+  },
+  data: () => ({
+    showNavigation: false,
+    showSidepanel: false,
+  }),
+  computed: {
+    ...mapGetters({
+      user: "login/getUsername",
     }),
   },
 };

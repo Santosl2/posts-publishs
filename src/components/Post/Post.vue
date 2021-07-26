@@ -2,7 +2,7 @@
   <div
     v-infinite-scroll="loadMore"
     infinite-scroll-disabled="allLoaded"
-    infinite-scroll-distance="20"
+    infinite-scroll-distance="40"
   >
     <div
       data-aos="slide-up"
@@ -24,8 +24,8 @@
       <div class="box-footer">
         <Like
           :userVoted="post.voted == 1"
-          :likes="post.countLikes"
-          :postId="post.id"
+          :likes="parseInt(post.countLikes)"
+          :postId="parseInt(post.id)"
         />
       </div>
     </div>
@@ -49,14 +49,24 @@ export default {
   },
   data: () => ({
     posts: [],
-    page: 0,
+    page: 1,
     allLoaded: false,
   }),
   methods: {
     loadMore() {
+      this.allLoaded = true;
       API.get(`/posts?page=${this.page++}`).then((response) => {
-        this.allLoaded = response.data == false;
-        this.posts.push(response.data);
+        this.allLoaded = false;
+        if (!response.data[0]) {
+          this.allLoaded = true;
+          return;
+        }
+
+        response.data.forEach((element, index) => {
+          if (index > 0) {
+            this.posts.push(element);
+          }
+        });
       });
     },
     getAllPosts() {
